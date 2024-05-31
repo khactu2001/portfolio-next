@@ -1,12 +1,13 @@
 "use client";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 import useSWR from "swr";
 import { User } from "./type";
 import { Footer } from "./components/home/home.footer";
 import NavBarHeader from "./components/home/home.header";
-
+import { sql } from "@vercel/postgres";
+import { NextResponse } from "next/server";
 function TableContent({ data }: { data: User[] }) {
   return (
     <Table striped bordered hover>
@@ -19,12 +20,6 @@ function TableContent({ data }: { data: User[] }) {
         </tr>
       </thead>
       <tbody>
-        {/* <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr> */}
-
         {data.map((user) => (
           <tr key={user.id}>
             <td>{user.id}</td>
@@ -48,9 +43,28 @@ function Home() {
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
   console.log("data", data);
+
+  // GET();
+  // console.log(
+  //   "datakadjflk",
+  //   tempData.reduce(
+  //     (prev, cur) =>
+  //       `${prev}, (${cur.id}, '${cur.userId}@gmail.com', '${cur.title}', '${cur.userId}')`
+  //   ),
+  //   ""
+  // );
   return (
     <div>
       <NavBarHeader />
+      {/* <Button
+        variant="success"
+        onClick={() => {
+          GET();
+        }}
+      >
+        About
+      </Button> */}
+
       <Container fluid className="flex justify-content-center px-md-10">
         <TableContent data={data} />
       </Container>
